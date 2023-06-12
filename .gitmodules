@@ -1,0 +1,3 @@
+[submodule "src/serai"]
+	path = src/serai
+	url = https://github.com/serai-dex/serai
