@@ -666,6 +666,7 @@ name = "libxmr"
 version = "0.1.0"
 dependencies = [
  "monero-serai",
+ "rand_core 0.6.4",
 ]
 
 [[package]]

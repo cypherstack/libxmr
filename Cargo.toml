@@ -14,3 +14,4 @@ crate-type = ["cdylib"]
 
 [dependencies]
 monero-serai = { version = "0.1.4-alpha", path = "src/serai/coins/monero" }
+rand_core = "0.6.4"
