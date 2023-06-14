@@ -3,5 +3,14 @@ name = "libxmr"
 version = "0.1.0"
 edition = "2021"
 
+[[bin]]
+name = "libxmr"
+path = "src/main.rs"
+
+[lib]
+name = "libxmr"
+path = "src/lib.rs"
+crate-type = ["cdylib"]
+
 [dependencies]
 monero-serai = { version = "0.1.4-alpha", path = "src/serai/coins/monero" }
