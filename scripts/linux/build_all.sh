@@ -16,8 +16,6 @@ rm -rf build/serai
 cp -rf ../../src/serai build/serai
 
 cd build
-git apply ../patches/Cargo.toml.patch
-git apply ../patches/build.rs.patch
 cd serai/coins/monero
 if [ "$IS_ARM" = true ]  ; then
     echo "Building arm version"
