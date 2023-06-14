@@ -1,8 +1,15 @@
 diff --git a/coins/monero/Cargo.toml b/coins/monero/Cargo.toml
-index f3e8054..4cf943e 100644
---- a/coins/monero/Cargo.toml
-+++ b/coins/monero/Cargo.toml
-@@ -65,3 +65,7 @@ frost = { package = "modular-frost", path = "../../crypto/frost", version = "0.7
+--- a/coins/monero/Cargo.toml   (revision dfa3106a38b399b74d17360e0d63687682fa505c)
++++ b/coins/monero/Cargo.toml   (date 1686700529038)
+@@ -54,6 +54,7 @@
+ [build-dependencies]
+ dalek-ff-group = { path = "../../crypto/dalek-ff-group", version = "0.3" }
+ monero-generators = { path = "generators", version = "0.3" }
++cbindgen = "0.24.0"
+ 
+ [dev-dependencies]
+ hex-literal = "0.4"
+@@ -65,3 +66,7 @@
  
  [features]
  multisig = ["transcript", "frost", "dleq"]
