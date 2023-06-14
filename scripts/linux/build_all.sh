@@ -21,7 +21,7 @@ if [ "$IS_ARM" = true ]  ; then
     echo "Building arm version"
     cargo build --target aarch64-unknown-linux-gnu --release --lib
     # mkdir -p ../../../../linux/bin/aarch64-unknown-linux-gnu/release
-    cp ../../target/aarch64-unknown-linux-gnu/release/libepic_cash_wallet.so ../../../
+    cp ../../target/aarch64-unknown-linux-gnu/release/libmonero_serai.so ../../../
 else
     echo "Building x86_64 version"
     cargo build --target x86_64-unknown-linux-gnu --release --lib
