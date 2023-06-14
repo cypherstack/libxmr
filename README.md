@@ -37,7 +37,8 @@ cd scripts/android
 -->
 ## Development
 
-To generate `monero-serai.h` C bindings for Rust, `cbindgen --config cbindgen.toml --crate monero-serai --output target/monero-serai.h` or `cargo build` in `scripts/linux/build/serai/coins/monero` to produce headers according to `build.rs` (relevant patches must be applied)
+C bindings are generated on `cargo build`s via `build.rs`.  To generate bindings manually, `cbindgen --config cbindgen.toml --crate libxmr --output libxmr_bindings.h`
+
 To generate `libxmr_bindings_generated.dart` Dart bindings for C, `flutter pub run ffigen --config ffigen.yaml`
 
 ## Getting Started
