@@ -1,0 +1,7 @@
+[package]
+name = "libxmr"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+monero-serai = { version = "0.1.4-alpha", path = "src/serai/coins/monero" }
