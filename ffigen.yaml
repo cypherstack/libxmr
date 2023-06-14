@@ -7,9 +7,9 @@ description: |
 output: 'lib/libxmr_bindings_generated.dart'
 headers:
   entry-points:
-    - 'src/libxmr.h'
+    - 'scripts/linux/build/serai/coins/monero/target/monero-serai.h'
   include-directives:
-    - 'src/libxmr.h'
+    - 'scripts/linux/build/serai/coins/monero/target/monero-serai.h'
 preamble: |
   // ignore_for_file: always_specify_types
   // ignore_for_file: camel_case_types

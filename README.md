@@ -1,6 +1,44 @@
 # libxmr
 
-A new Flutter project.
+[libxmr](https://git.cypherstack.com/julian/libxmr) as a multi-platform Flutter FFI plugin for Monero based on [serai-dex/serai's Monero library](https://github.com/serai-dex/serai).
+
+## Getting started
+
+### [Install rust](https://www.rust-lang.org/tools/install)
+
+### Install cargo ndk
+```sh
+cargo install cargo-ndk
+```
+
+### Install dependencies
+```sh
+sudo apt install git build-essential cmake llvm clang pkg-config cargo rustc libssl-dev libc6-dev-i386
+```
+
+### Run build scripts
+
+#### Linux
+
+Run build script
+```sh
+cd scripts/linux
+./build_all.sh
+```
+<!--
+#### Android
+
+Run the NDK setup and build scripts
+```sh
+cd scripts/android
+./install_ndk.sh
+./build_all.sh
+```
+-->
+## Development
+
+To generate `libxmr.h` C bindings for Rust, `cbindgen --config cbindgen.toml --crate monero --output target/monero-serai.h` or `cargo build` in `src/serai/coins/monero` to produce headers according to `build.rs` (relevant patches must be applied)
+To generate `libxmr_bindings_generated.dart` Dart bindings for C, `flutter pub run ffigen --config ffigen.yaml`
 
 ## Getting Started
 
