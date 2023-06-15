@@ -1,11 +1,8 @@
-#include <cstdarg>
-#include <cstdint>
-#include <cstdlib>
-#include <ostream>
-#include <new>
+#include <stdarg.h>
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
+#include <stdlib.h>
 
-extern "C" {
 
-void generate_seed();
-
-} // extern "C"
+void generate_seed(void);
