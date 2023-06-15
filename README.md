@@ -18,6 +18,11 @@ sudo apt install git build-essential cmake llvm clang pkg-config cargo rustc lib
 
 Windows and MacOS, see additional [ffigen](https://pub.dev/packages/ffigen#installing-llvm) requirements
 
+### Init `serai` submodule
+```sh
+git submodule update --init --recursive
+```
+
 ### Run build scripts
 
 #### Linux
