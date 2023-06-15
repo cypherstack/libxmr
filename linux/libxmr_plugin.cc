@@ -14,7 +14,7 @@ struct _LibXmrPlugin {
   GObject parent_instance;
 };
 
-G_DEFINE_TYPE(LibXmrPlugin, libxmr_plugin, g_object_get_type())
+G_DEFINE_TYPE(LibXmrPlugin, libxmr_plugin, g_object_get_type());
 
 // Called when a method call is received from Flutter.
 static void libxmr_plugin_handle_method_call(
@@ -49,12 +49,12 @@ static void libxmr_plugin_init(LibXmrPlugin* self) {}
 
 static void method_call_cb(FlMethodChannel* channel, FlMethodCall* method_call,
                            gpointer user_data) {
-  LibXmrPlugin* plugin = libxmr_PLUGIN(user_data);
+  LibXmrPlugin* plugin = LIBXMR_PLUGIN(user_data);
   libxmr_plugin_handle_method_call(plugin, method_call);
 }
 
 void libxmr_plugin_register_with_registrar(FlPluginRegistrar* registrar) {
-  LibXmrPlugin* plugin = libxmr_PLUGIN(
+  LibXmrPlugin* plugin = LIBXMR_PLUGIN(
       g_object_new(libxmr_plugin_get_type(), nullptr));
 
   g_autoptr(FlStandardMethodCodec) codec = fl_standard_method_codec_new();

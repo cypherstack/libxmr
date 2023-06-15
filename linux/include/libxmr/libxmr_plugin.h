@@ -11,10 +11,10 @@ G_BEGIN_DECLS
 #define FLUTTER_PLUGIN_EXPORT
 #endif
 
-typedef struct _LibXmrPlugin FlutterLibXmrPlugin;
+typedef struct _LibXmrPlugin LibXmrPlugin;
 typedef struct {
   GObjectClass parent_class;
-} FlutterLibXmrPluginClass;
+} LibXmrPluginClass;
 
 FLUTTER_PLUGIN_EXPORT GType libxmr_plugin_get_type();
 
