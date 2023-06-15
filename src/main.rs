@@ -17,6 +17,5 @@ use monero_serai::{
 use rand_core::OsRng; // for generating a seed
 
 fn main() {
-    let seed = Seed::new(&mut OsRng, Language::English);
-    println!("{:?}", Seed::to_string(&seed));
+    println!("{:?}", Seed::to_string(&Seed::new(&mut OsRng, Language::English)));
 }
