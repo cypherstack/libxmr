@@ -16,7 +16,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   late dynamic seed; // TODO type/model
-  late Future<int> sumAsyncResult;
+  // late Future<int> sumAsyncResult;
 
   @override
   void initState() {
