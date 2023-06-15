@@ -13,8 +13,10 @@ cargo install cargo-ndk
 
 ### Install dependencies
 ```sh
-sudo apt install git build-essential cmake llvm clang pkg-config cargo rustc libssl-dev libc6-dev-i386
+sudo apt install git build-essential cmake llvm clang pkg-config cargo rustc libssl-dev libc6-dev-i386 libclang-dev
 ```
+
+Windows and MacOS, see additional [ffigen](https://pub.dev/packages/ffigen#installing-llvm) requirements
 
 ### Run build scripts
 
@@ -37,9 +39,9 @@ cd scripts/android
 -->
 ## Development
 
-C bindings are generated on `cargo build`s via `build.rs`.  To generate bindings manually, `cbindgen --config cbindgen.toml --crate libxmr --output libxmr_bindings.h`
+C bindings are generated on `cargo build`s via `build.rs`.  If there are issues building, try generating bindings manually: `cbindgen --config cbindgen.toml --crate libxmr --output libxmr_bindings.h`
 
-To generate `libxmr_bindings_generated.dart` Dart bindings for C, `flutter pub run ffigen --config ffigen.yaml`
+To generate `libxmr_bindings_generated.dart` Dart bindings for C: `dart run ffigen --config ffigen.yaml`
 
 ## Getting Started
 
