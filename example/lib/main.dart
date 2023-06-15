@@ -15,14 +15,13 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late int sumResult;
+  late dynamic seed; // TODO type/model
   late Future<int> sumAsyncResult;
 
   @override
   void initState() {
     super.initState();
-    sumResult = libxmr.sum(1, 2);
-    sumAsyncResult = libxmr.sumAsync(3, 4);
+    seed = libxmr.generate_seed();
   }
 
   @override
@@ -47,23 +46,23 @@ class _MyAppState extends State<MyApp> {
                 ),
                 spacerSmall,
                 Text(
-                  'sum(1, 2) = $sumResult',
+                  'seed: $seed',
                   style: textStyle,
                   textAlign: TextAlign.center,
                 ),
-                spacerSmall,
-                FutureBuilder<int>(
-                  future: sumAsyncResult,
-                  builder: (BuildContext context, AsyncSnapshot<int> value) {
-                    final displayValue =
-                        (value.hasData) ? value.data : 'loading';
-                    return Text(
-                      'await sumAsync(3, 4) = $displayValue',
-                      style: textStyle,
-                      textAlign: TextAlign.center,
-                    );
-                  },
-                ),
+                // spacerSmall,
+                // FutureBuilder<int>(
+                //   future: sumAsyncResult,
+                //   builder: (BuildContext context, AsyncSnapshot<int> value) {
+                //     final displayValue =
+                //         (value.hasData) ? value.data : 'loading';
+                //     return Text(
+                //       'await sumAsync(3, 4) = $displayValue',
+                //       style: textStyle,
+                //       textAlign: TextAlign.center,
+                //     );
+                //   },
+                // ),
               ],
             ),
           ),
