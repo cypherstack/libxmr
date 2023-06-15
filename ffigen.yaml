@@ -4,7 +4,7 @@ description: |
   Bindings for `libxmr_bindings.h`.
 
   Regenerate bindings with `flutter pub run ffigen --config ffigen.yaml`.
-output: 'lib/libxmr_bindings_generated.dart'
+output: 'lib/libxmr.dart'
 headers:
   entry-points:
     - 'libxmr_bindings.h'
