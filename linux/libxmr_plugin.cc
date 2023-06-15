@@ -6,7 +6,7 @@
 
 #include <cstring>
 
-#define libxmr_PLUGIN(obj) \
+#define LIBXMR_PLUGIN(obj) \
   (G_TYPE_CHECK_INSTANCE_CAST((obj), libxmr_plugin_get_type(), \
                               LibXmrPlugin))
 
