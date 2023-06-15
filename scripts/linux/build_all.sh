@@ -22,9 +22,14 @@ if [ "$IS_ARM" = true ]  ; then
     cargo build --target aarch64-unknown-linux-gnu --release --lib
     # mkdir -p ../../../../linux/bin/aarch64-unknown-linux-gnu/release
     cp ../../target/aarch64-unknown-linux-gnu/release/libmonero_serai.so ../../../
+    cd ../../../../
+    cargo build --target aarch64-unknown-linux-gnu --release --lib
 else
     echo "Building x86_64 version"
     cargo build --target x86_64-unknown-linux-gnu --release --lib
     # mkdir -p ../../../../linux/bin/x86_64-unknown-linux-gnu/release
     cp ../../target/x86_64-unknown-linux-gnu/release/libmonero_serai.so ../../../
+    cd ../../../../
+    cargo build --target x86_64-unknown-linux-gnu --release --lib
+    # TODO copy .so to scripts/linux/build
 fi
