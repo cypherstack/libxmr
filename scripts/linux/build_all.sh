@@ -18,18 +18,26 @@ cp -rf ../../src/serai build/serai
 cd build
 cd serai/coins/monero
 if [ "$IS_ARM" = true ]  ; then
-    echo "Building arm version"
+    echo "Building arm monero-serai"
     cargo build --target aarch64-unknown-linux-gnu --release --lib
     # mkdir -p ../../../../linux/bin/aarch64-unknown-linux-gnu/release
-    cp ../../target/aarch64-unknown-linux-gnu/release/libmonero_serai.so ../../../
-    cd ../../../../
-    cargo build --target aarch64-unknown-linux-gnu --release --lib
+    cp target/aarch64-unknown-linux-gnu/release/libmonero_serai.so ../../../
 else
-    echo "Building x86_64 version"
+    echo "Building x86_64 monero-serai"
     cargo build --target x86_64-unknown-linux-gnu --release --lib
     # mkdir -p ../../../../linux/bin/x86_64-unknown-linux-gnu/release
-    cp ../../target/x86_64-unknown-linux-gnu/release/libmonero_serai.so ../../../
-    cd ../../../../
+    cp target/x86_64-unknown-linux-gnu/release/libmonero_serai.so ../../../
+fi
+
+cd ../../
+
+if [ "$IS_ARM" = true ]  ; then
+    echo "Building arm libxmr"
+    cargo build --target aarch64-unknown-linux-gnu --release --lib
+    # mkdir -p ../../../../linux/bin/aarch64-unknown-linux-gnu/release
+    cp target/aarch64-unknown-linux-gnu/release/liblibxmr.so scripts/linux/build/libxmr.so # TODO update to not build outside of the scripts/linux/build folder
+else
+    echo "Building x86_64 libxmr"
     cargo build --target x86_64-unknown-linux-gnu --release --lib
-    # TODO copy .so to scripts/linux/build
+    cp target/aarch64-unknown-linux-gnu/release/liblibxmr.so scripts/linux/build/libxmr.so # TODO update to not build outside of the scripts/linux/build folder
 fi
