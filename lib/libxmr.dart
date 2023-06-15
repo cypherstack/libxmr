@@ -25,6 +25,10 @@ final DynamicLibrary _dylib = () {
 /// The bindings to the native functions in [_dylib].
 final LibxmrBindings _bindings = LibxmrBindings(_dylib);
 
+dynamic generate_seed() {  // TODO type/model
+  return _bindings.generate_seed();
+}
+
 /// The SendPort belonging to the helper isolate.
 Future<SendPort> _helperIsolateSendPort = () async {
   // The helper isolate is going to send us back a SendPort, which we want to
