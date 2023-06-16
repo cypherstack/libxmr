@@ -7,16 +7,12 @@ use monero_serai::{
 };
 
 use rand_core::OsRng; // for generating a seed
-use zeroize::{Zeroizing};
 use std::os::raw::{c_char};
 use std::ffi::CString;
 
 #[no_mangle] pub extern "C" fn generate_seed() -> *const c_char { // TODO rename fn to be more in line with other libs/impls
-    convert_zeroize_string_to_c_string(&Seed::to_string(&Seed::new(&mut OsRng, Language::English)))
-     // TODO add lang as param
-}
-
-fn convert_zeroize_string_to_c_string(zeroized_string: &Zeroizing<String>) -> *const c_char {
+    let zeroized_string = &Seed::to_string(&Seed::new(&mut OsRng, Language::English));
+    
     // Convert the zeroized string to a normal string
     let rust_string = zeroized_string.as_str();
 
@@ -24,12 +20,13 @@ fn convert_zeroize_string_to_c_string(zeroized_string: &Zeroizing<String>) -> *c
     let c_string = CString::new(rust_string).expect("Failed to create CString");
 
     // Convert the CString to a raw pointer
-    let raw_ptr = c_string.into_raw();
+    let raw_ptr = c_string.as_ptr();
 
-    let const_ptr = raw_ptr as *const c_char;
+    // Clear memory
+    std::mem::forget(c_string);
 
     // Return the raw pointer
-    const_ptr
+    raw_ptr
 }
 
 // TODO remove this example fn

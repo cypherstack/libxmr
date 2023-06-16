@@ -25,8 +25,10 @@ final DynamicLibrary _dylib = () {
 /// The bindings to the native functions in [_dylib].
 final LibxmrBindings _bindings = LibxmrBindings(_dylib);
 
-dynamic generate_seed() {  // TODO type/model
-  return _bindings.generate_seed();
+Pointer<Char> generate_seed() {
+  dynamic seed = _bindings.generate_seed();
+  print("libxmr.dart Seed: ${seed}");
+  return seed;
 }
 
 /// The SendPort belonging to the helper isolate.

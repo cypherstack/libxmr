@@ -15,13 +15,13 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late dynamic seed; // TODO type/model
+  late dynamic seed = libxmr.generate_seed().toString(); // TODO type/model
   // late Future<int> sumAsyncResult;
 
   @override
   void initState() {
     super.initState();
-    seed = libxmr.generate_seed();
+    print("example/main.dart Seed: $seed");
   }
 
   @override
