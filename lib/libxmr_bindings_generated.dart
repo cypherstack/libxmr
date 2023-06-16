@@ -27,11 +27,13 @@ class LibxmrBindings {
           lookup)
       : _lookup = lookup;
 
-  void generate_seed() {
+  ffi.Pointer<ffi.Char> generate_seed() {
     return _generate_seed();
   }
 
   late final _generate_seedPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function()>>('generate_seed');
-  late final _generate_seed = _generate_seedPtr.asFunction<void Function()>();
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function()>>(
+          'generate_seed');
+  late final _generate_seed =
+      _generate_seedPtr.asFunction<ffi.Pointer<ffi.Char> Function()>();
 }

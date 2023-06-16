@@ -5,4 +5,4 @@
 #include <stdlib.h>
 
 
-void generate_seed(void);
+const char *generate_seed(void);
