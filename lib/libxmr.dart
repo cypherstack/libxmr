@@ -6,7 +6,7 @@ import 'dart:isolate';
 
 import 'libxmr_bindings_generated.dart';
 
-const String _libName = 'monero_serai';
+const String _libName = 'libxmr';
 
 /// The dynamic library in which the symbols for [LibxmrBindings] can be found.
 final DynamicLibrary _dylib = () {
