@@ -44,7 +44,8 @@ cd scripts/android
 -->
 ## Development
 
-<!--C bindings are generated on `cargo build`s via `build.rs`.-->To generate `libxmr_bindings.h` C bindings for Rust: `cbindgen --config cbindgen.toml --crate libxmr --output libxmr_bindings.h`
+<!--C bindings are generated on `cargo build`s via `build.rs`.-->
+To generate `libxmr_bindings.h` C bindings for Rust: `cbindgen --config cbindgen.toml --crate libxmr --output libxmr_bindings.h`
 
 To generate `libxmr_bindings_generated.dart` Dart bindings for C: `dart run ffigen --config ffigen.yaml`
 
