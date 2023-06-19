@@ -4,7 +4,9 @@
 
 ## Getting started
 
-### [Install rust](https://www.rust-lang.org/tools/install)
+### Install Rust 
+
+https://www.rust-lang.org/tools/install
 
 ### Install cargo ndk
 ```sh
@@ -43,6 +45,8 @@ cd scripts/android
 ```
 -->
 ## Development
+
+Use `flutter run` in the `example` folder for a demonstration of this plugin.
 
 <!--C bindings are generated on `cargo build`s via `build.rs`.-->
 To generate `libxmr_bindings.h` C bindings for Rust: `cbindgen --config cbindgen.toml --crate libxmr --output libxmr_bindings.h`

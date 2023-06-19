@@ -1,6 +1,6 @@
 # libxmr_example
 
-Demonstrates how to use the libxmr plugin.
+Demonstrates how to use the libxmr plugin.  Run `flutter run` in this directory to run the example.
 
 ## Getting Started
 
