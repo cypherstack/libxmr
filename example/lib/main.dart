@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
-
 import 'package:libxmr/libxmr.dart' as libxmr;
 
 void main() {
@@ -15,56 +13,59 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late dynamic seed; // TODO type/model
-  // late Future<int> sumAsyncResult;
+  dynamic seed = null; // TODO type/model
+
+  static const textStyle = TextStyle(fontSize: 25);
+  static const spacerSmall = SizedBox(
+    height: 10,
+    width: double.infinity,
+  );
 
   @override
   void initState() {
     super.initState();
-    seed = libxmr.generate_seed();
   }
 
   @override
   Widget build(BuildContext context) {
-    const textStyle = TextStyle(fontSize: 25);
-    const spacerSmall = SizedBox(height: 10);
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Native Packages'),
+          title: const Text('libxmr example app'),
         ),
         body: SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.all(10),
-            child: Column(
-              children: [
-                const Text(
-                  'This calls a native function through FFI that is shipped as source in the package. ',
-                  // 'The native code is built as part of the Flutter Runner build.',
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              spacerSmall,
+              spacerSmall,
+              TextButton(
+                onPressed: () {
+                  final seed = libxmr.generate_seed();
+
+                  setState(() {
+                    this.seed = seed;
+                  });
+                },
+                child: const Text(
+                  "Generate seed",
                   style: textStyle,
-                  textAlign: TextAlign.center,
                 ),
-                spacerSmall,
-                Text(
-                  'seed: $seed',
-                  style: textStyle,
-                  textAlign: TextAlign.center,
-                ),
-                // spacerSmall,
-                // FutureBuilder<int>(
-                //   future: sumAsyncResult,
-                //   builder: (BuildContext context, AsyncSnapshot<int> value) {
-                //     final displayValue =
-                //         (value.hasData) ? value.data : 'loading';
-                //     return Text(
-                //       'await sumAsync(3, 4) = $displayValue',
-                //       style: textStyle,
-                //       textAlign: TextAlign.center,
-                //     );
-                //   },
-                // ),
-              ],
-            ),
+              ),
+              spacerSmall,
+              spacerSmall,
+              Text(
+                'seed: $seed',
+                style: textStyle,
+                textAlign: TextAlign.center,
+              ),
+              spacerSmall,
+              Text(
+                'seed variable type: ${seed.runtimeType}',
+                style: textStyle,
+                textAlign: TextAlign.center,
+              ),
+            ],
           ),
         ),
       ),
