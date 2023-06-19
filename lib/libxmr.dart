@@ -1,9 +1,9 @@
-
 import 'dart:async';
 import 'dart:ffi';
-import 'package:ffi/ffi.dart';
 import 'dart:io';
 import 'dart:isolate';
+
+import 'package:ffi/ffi.dart';
 
 import 'libxmr_bindings_generated.dart';
 
@@ -26,10 +26,14 @@ final DynamicLibrary _dylib = () {
 /// The bindings to the native functions in [_dylib].
 final LibxmrBindings _bindings = LibxmrBindings(_dylib);
 
-dynamic generate_seed() {  // TODO type/model
+String generate_seed() {
   Pointer<Char> seedPtr = _bindings.generate_seed();
+  final seed = extract_string_from_charptr(seedPtr);
 
-  return extract_string_from_charptr(seedPtr);
+  // TODO: is this needed here?
+  calloc.free(seedPtr);
+
+  return seed;
 }
 
 String extract_string_from_charptr(Pointer<Char> charPointer) {
