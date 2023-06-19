@@ -10,6 +10,7 @@ use rand_core::OsRng; // for generating a seed
 use zeroize::{Zeroizing};
 use std::os::raw::{c_char};
 use std::ffi::CString;
+// use std::mem;
 
 #[no_mangle] pub extern "C" fn generate_seed() -> *const c_char { // TODO rename fn to be more in line with other libs/impls
     convert_zeroize_string_to_c_string(&Seed::to_string(&Seed::new(&mut OsRng, Language::English)))
@@ -27,6 +28,7 @@ fn convert_zeroize_string_to_c_string(zeroized_string: &Zeroizing<String>) -> *c
     let raw_ptr = c_string.into_raw();
 
     let const_ptr = raw_ptr as *const c_char;
+    // mem::forget(const_ptr);
 
     // Return the raw pointer
     const_ptr

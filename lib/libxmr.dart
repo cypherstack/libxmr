@@ -1,6 +1,7 @@
 
 import 'dart:async';
 import 'dart:ffi';
+import 'package:ffi/ffi.dart';
 import 'dart:io';
 import 'dart:isolate';
 
@@ -26,7 +27,16 @@ final DynamicLibrary _dylib = () {
 final LibxmrBindings _bindings = LibxmrBindings(_dylib);
 
 dynamic generate_seed() {  // TODO type/model
-  return _bindings.generate_seed();
+  Pointer<Char> seedPtr = _bindings.generate_seed();
+
+  return extract_string_from_charptr(seedPtr);
+}
+
+String extract_string_from_charptr(Pointer<Char> charPointer) {
+  final utf8Pointer = charPointer.cast<Utf8>();
+  final stringValue = utf8Pointer.toDartString();
+
+  return stringValue;
 }
 
 /// The SendPort belonging to the helper isolate.
