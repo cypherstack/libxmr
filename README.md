@@ -13,6 +13,10 @@ https://www.rust-lang.org/tools/install
 cargo install cargo-ndk
 ```
 
+### Install Flutter
+
+https://docs.flutter.dev/get-started/install
+
 ### Install dependencies
 ```sh
 sudo apt install git build-essential cmake llvm clang pkg-config cargo rustc libssl-dev libc6-dev-i386 libclang-dev
@@ -48,8 +52,8 @@ cd scripts/android
 
 Use `flutter run` in the `example` folder for a demonstration of this plugin.
 
-<!--C bindings are generated on `cargo build`s via `build.rs`.-->
 To generate `libxmr_bindings.h` C bindings for Rust: `cbindgen --config cbindgen.toml --crate libxmr --output libxmr_bindings.h`
+<!--C bindings are generated on `cargo build`s via `build.rs`. TODO re-enable this after build.rs is fixed to produce the same output as the cbindgen command above-->
 
 To generate `libxmr_bindings_generated.dart` Dart bindings for C: `dart run ffigen --config ffigen.yaml`
 
