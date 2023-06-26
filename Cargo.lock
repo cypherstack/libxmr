@@ -736,6 +736,7 @@ version = "0.1.0"
 dependencies = [
  "cbindgen",
  "curve25519-dalek",
+ "monero-generators",
  "monero-serai",
  "rand_core 0.6.4",
  "sha3",
