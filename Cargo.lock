@@ -738,6 +738,7 @@ dependencies = [
  "curve25519-dalek",
  "monero-serai",
  "rand_core 0.6.4",
+ "sha3",
  "zeroize",
 ]
 
