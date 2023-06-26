@@ -15,7 +15,10 @@ use monero_serai::{
 
 use rand_core::OsRng; // for generating a seed
 
-use curve25519_dalek::edwards::EdwardsPoint;
+use curve25519_dalek::{
+    edwards::EdwardsPoint,
+    scalar::Scalar,
+};
 
 use sha3::{Digest, Keccak256}; // for generating the view key
 
@@ -58,6 +61,7 @@ fn main() {
     println!("Private spend key: {:?}", hex::encode(spend));
     let spend_point: EdwardsPoint = hash_to_point(spend);
     let view: [u8; 32] = Keccak256::digest(&spend).into();
-    println!("Private view key: {:?}", hex::encode(view));
-    let view_point: EdwardsPoint = hash_to_point(view);
+    let view_scalar = Scalar::from_bytes_mod_order(view);
+    println!("Private view key: {:?}", hex::encode(view_scalar.to_bytes()));
+    let view_point: EdwardsPoint = hash_to_point(view_scalar.to_bytes()); // TODO should view or view_scalar be used here? we'll find out through the process of address encoding
 }
