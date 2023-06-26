@@ -62,16 +62,16 @@ fn main() {
 
     // generate address from test vector seed above
     let spend: [u8; 32] = *seed.entropy();
-    println!("Private spend key: {:?}", hex::encode(spend));
-    let spend_point: EdwardsPoint = hash_to_point(spend);
+    println!("Private spend key: {:?}", hex::encode(spend)); // this is correct
+    let spend_point: EdwardsPoint = hash_to_point(Keccak256::digest(&spend).into()); // this is probably incorrect
     let view: [u8; 32] = Keccak256::digest(&spend).into();
-    let view_scalar = Scalar::from_bytes_mod_order(view);
+    let view_scalar = Scalar::from_bytes_mod_order(view); // this is correct
     println!("Private view key: {:?}", hex::encode(view_scalar.to_bytes()));
-    let view_point: EdwardsPoint = hash_to_point(view); // TODO should view or view_scalar.to_bytes() be used here? we'll find out through the process of address encoding
+    let view_point: EdwardsPoint = hash_to_point(Keccak256::digest(&view).into()); // TODO this is probably incorrect, should view or view_scalar.to_bytes() be used here? we'll find out through the process of address encoding
     let address = MoneroAddress::new(
               AddressMeta::new(Network::Mainnet, AddressType::Standard),
               spend_point,
               view_point,
             );
-    println!("Public address: {:?}", address.to_string());
+    println!("Public address: {:?}", address.to_string()); // TODO this is incorrect
 }
