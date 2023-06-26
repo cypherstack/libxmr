@@ -18,7 +18,9 @@ use rand_core::OsRng; // for generating a seed
 use curve25519_dalek::constants::ED25519_BASEPOINT_POINT; // for generating an address TODO remove after generating address from Seed vs basepoint
 
 fn main() {
-    println!("{:?}", Seed::to_string(&Seed::new(&mut OsRng, Language::English)));
+    // generate seed & return as mnemonic
+    let seed = &Seed::new(&mut OsRng, Language::English); // TODO input lang as param
+    println!("{:?}", Seed::to_string(seed));
 
     // generate address
     println!("{:?}", 
