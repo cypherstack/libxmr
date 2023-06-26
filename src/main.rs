@@ -15,11 +15,7 @@ use monero_serai::{
 
 use rand_core::OsRng; // for generating a seed
 
-use curve25519_dalek::{
-    constants::ED25519_BASEPOINT_POINT, // for generating an address TODO remove after generating address from Seed vs basepoint
-    edwards::{EdwardsPoint},
-    // scalar::Scalar,
-};
+use curve25519_dalek::edwards::EdwardsPoint;
 
 use sha3::{Digest, Keccak256}; // for generating the view key
 
