@@ -23,8 +23,6 @@ use curve25519_dalek::{
 
 use sha3::{Digest, Keccak256}; // for generating the view key
 
-use monero_generators::{hash_to_point}; // for [u8; 32] -> EdwardsPoint conversion
-
 use zeroize::Zeroizing;
 
 fn main() {
