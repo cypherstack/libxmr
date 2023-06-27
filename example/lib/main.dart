@@ -14,6 +14,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   dynamic seed = null; // TODO type/model
+  dynamic address = null; // TODO type/model
 
   static const textStyle = TextStyle(fontSize: 25);
   static const spacerSmall = SizedBox(
@@ -62,6 +63,34 @@ class _MyAppState extends State<MyApp> {
               spacerSmall,
               Text(
                 'seed variable type: ${seed.runtimeType}',
+                style: textStyle,
+                textAlign: TextAlign.center,
+              ),
+              spacerSmall,
+              spacerSmall,
+              TextButton(
+                onPressed: () {
+                  final address = libxmr.generate_address(seed);
+
+                  setState(() {
+                    this.address = address;
+                  });
+                },
+                child: const Text(
+                  "Generate address",
+                  style: textStyle,
+                ),
+              ),
+              spacerSmall,
+              spacerSmall,
+              Text(
+                'address: $address',
+                style: textStyle,
+                textAlign: TextAlign.center,
+              ),
+              spacerSmall,
+              Text(
+                'address variable type: ${address.runtimeType}',
                 style: textStyle,
                 textAlign: TextAlign.center,
               ),
