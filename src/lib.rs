@@ -27,13 +27,7 @@ use sha3::{Digest, Keccak256}; // for generating the view key
 }
 
 #[no_mangle] pub extern "C" fn generate_address(mnemonic: *const c_char) -> *const c_char {
-    let c_str = unsafe {
-        assert!(!mnemonic.is_null());
-
-        CStr::from_ptr(mnemonic)
-    };
-    let r_string = c_str.to_str().unwrap().to_string(); // to_owned()? TODO validate that c_str is valid
-    let seed = Seed::from_string(Zeroizing::new(r_string)).unwrap(); // TODO catch empty mnemonic, validate it
+    let seed = Seed::from_string(Zeroizing::new(convert_c_char_ptr_to_string(mnemonic))).unwrap(); // TODO catch empty mnemonic, validate it
 
     let spend: [u8; 32] = *seed.entropy();
     let spend_scalar = Scalar::from_bytes_mod_order(spend);
@@ -74,10 +68,14 @@ fn convert_zeroize_string_to_c_string(zeroized_string: &Zeroizing<String>) -> *c
     const_ptr
 }
 
-fn convert_c_char_ptr_to_str(c_char: *const c_char) -> String { // TODO return Result<String, Error>
-    let c_str: &CStr = unsafe { CStr::from_ptr(c_char) }; // TODO validate that this pointer is valid and points to a null-terminated string
-    let str_slice: &str = c_str.to_str().unwrap(); // TODO validate that c_str is valid UTF-8
-    str_slice.to_string()
+fn convert_c_char_ptr_to_string(c_char_ptr: *const c_char) -> String { // TODO return Result<String, Error>
+    let c_str: &CStr = unsafe {
+        assert!(!c_char_ptr.is_null());
+
+        CStr::from_ptr(c_char_ptr)
+    }; // TODO validate that this pointer points to a null-terminated string
+    let r_string: String = c_str.to_str().unwrap().to_string(); // to_owned()? TODO validate that c_str is valid
+    r_string
 }
 
 // TODO remove this example fn
