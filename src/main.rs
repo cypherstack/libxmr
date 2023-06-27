@@ -13,7 +13,7 @@ use monero_serai::{
 };
 // use monero_serai::*;
 
-use rand_core::OsRng; // for generating a seed
+use rand_core::OsRng; // for generating a random seed
 
 use curve25519_dalek::{
     edwards::EdwardsPoint,
