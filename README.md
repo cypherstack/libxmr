@@ -1,6 +1,6 @@
 # libxmr
 
-[libxmr](https://git.cypherstack.com/julian/libxmr) as a multi-platform Flutter FFI plugin for Monero based on [monero-serai, serai-dex/serai's Monero library](https://github.com/serai-dex/serai).
+[libxmr](https://git.cypherstack.com/julian/libxmr) as a multi-platform Flutter FFI plugin for Monero using [monero-serai, serai-dex/serai's Monero library](https://github.com/serai-dex/serai).
 
 ## Getting started
 
