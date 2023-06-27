@@ -28,8 +28,9 @@ use monero_generators::{hash_to_point}; // for [u8; 32] -> EdwardsPoint conversi
 use zeroize::Zeroizing;
 
 fn main() {
+    // address generation test vectors
     println!("\nRunning checks on test vector...");
-    // run same tests on test vector; see https://xmrtests.llcoins.net/addresstests.html
+    // test vector from https://xmrtests.llcoins.net/addresstests.html
     // seed (mnemonic): hemlock jubilee eden hacksaw boil superior inroads epoxy exhale orders cavernous second brunt saved richly lower upgrade hitched launching deepest mostly playful layout lower eden
     // seed (hex): 29adefc8f67515b4b4bf48031780ab9d071d24f8a674b879ce7f245c37523807
     // private spend: 29adefc8f67515b4b4bf48031780ab9d071d24f8a674b879ce7f245c37523807
@@ -62,6 +63,7 @@ fn main() {
 
     // TODO refactor into test with assertions
 
+    // example random seed generation:
     println!("Running generation example...");
     let seed = &Seed::new(&mut OsRng, Language::English);
     println!("Seed (mnemonic): {:?}", Seed::to_string(seed));
