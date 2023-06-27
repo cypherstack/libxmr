@@ -18,6 +18,7 @@ use rand_core::OsRng; // for generating a seed
 use curve25519_dalek::{
     edwards::EdwardsPoint,
     scalar::Scalar,
+    constants::ED25519_BASEPOINT_TABLE,
 };
 
 use sha3::{Digest, Keccak256}; // for generating the view key
@@ -64,10 +65,13 @@ fn main() {
     let spend: [u8; 32] = *seed.entropy();
     println!("Private spend key: {:?}", hex::encode(spend)); // this is correct
     let spend_point: EdwardsPoint = hash_to_point(Keccak256::digest(&spend).into()); // this is probably incorrect
+    let spend_scalar = Scalar::from_bytes_mod_order(spend);
+    let spend_point: EdwardsPoint = &spend_scalar * &ED25519_BASEPOINT_TABLE;
     let view: [u8; 32] = Keccak256::digest(&spend).into();
     let view_scalar = Scalar::from_bytes_mod_order(view); // this is correct
     println!("Private view key: {:?}", hex::encode(view_scalar.to_bytes()));
     let view_point: EdwardsPoint = hash_to_point(Keccak256::digest(&view).into()); // TODO this is probably incorrect, should view or view_scalar.to_bytes() be used here? we'll find out through the process of address encoding
+    // let view_point: EdwardsPoint = view_scalar * &ED25519_BASEPOINT_TABLE;
     let address = MoneroAddress::new(
               AddressMeta::new(Network::Mainnet, AddressType::Standard),
               spend_point,
