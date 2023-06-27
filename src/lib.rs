@@ -27,16 +27,13 @@ use sha3::{Digest, Keccak256}; // for generating the view key
 }
 
 #[no_mangle] pub extern "C" fn generate_address(mnemonic: *const c_char) -> *const c_char {
-    // let c_str = unsafe {
-    //     assert!(!mnemonic.is_null());
-    //
-    //     CStr::from_ptr(mnemonic)
-    // };
-    //
-    // let r_str = c_str.to_str().unwrap().to_string();
+    let c_str = unsafe {
+        assert!(!mnemonic.is_null());
 
-    // let seed = Seed::from_string(Zeroizing::new(r_str)).unwrap(); // TODO catch empty mnemonic, validate it
-    let seed = &Seed::new(&mut OsRng, Language::English); // random seed as proof of concept, isolating mnemonic param
+        CStr::from_ptr(mnemonic)
+    };
+    let r_string = c_str.to_str().unwrap().to_string(); // to_owned()? TODO validate that c_str is valid
+    let seed = Seed::from_string(Zeroizing::new(r_string)).unwrap(); // TODO catch empty mnemonic, validate it
 
     let spend: [u8; 32] = *seed.entropy();
     let spend_scalar = Scalar::from_bytes_mod_order(spend);
@@ -55,8 +52,8 @@ use sha3::{Digest, Keccak256}; // for generating the view key
     );
 
     let c_string = CString::new(address.to_string()).unwrap();
-    let pointer = c_string.as_ptr() as *const c_char;
-    std::mem::forget(c_string);
+    let pointer: *const c_char = c_string.as_ptr() as *const c_char;
+    std::mem::forget(c_string); // warning: memory leak! must free this memory once done with it
     pointer
 }
 
