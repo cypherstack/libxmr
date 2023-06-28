@@ -58,6 +58,7 @@ fn main() {
     // Secret spend key: 722bbfcf99a9b2c9e700ce857850dd8c4c94c73dca8d914c603f5fee0e365803
     // Public spend key: 5c8044a93a0d4b73fdd9698b1c8935d3bcae206e26590ce425c2085e2fb81db3
     digest_mnemonic("vocal either anvil films dolphin zeal bacon cuisine quote syndrome rejoices envy okay pancakes tulips lair greater petals organs enmity dedicated oust thwart tomorrow tomorrow", &Network::Stagenet);
+    // block 76415 c9102b88b764591c613403f3c1ecf5d14a2929ce49b9e22257a925a25b84d0ef has coinbase tx c6c25a04dc01391875a9f845f03652798caea0772fb033615a1b2963731bfbef, 31.354865430195
 }
 
 fn digest_mnemonic(mnemonic: &str, network: &Network) {
