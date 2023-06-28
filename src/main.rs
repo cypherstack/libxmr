@@ -40,9 +40,7 @@ fn main() {
     let mnemonic: &str = "hemlock jubilee eden hacksaw boil superior inroads epoxy exhale orders cavernous second brunt saved richly lower upgrade hitched launching deepest mostly playful layout lower eden";
     let seed = Seed::from_string(Zeroizing::new(mnemonic.to_string())).unwrap();
     println!("Seed (mnemonic): {:?}", Seed::to_string(&seed));
-
     // TODO generate public spend and view keys
-
     // generate address from test vector seed above
     let spend: [u8; 32] = *seed.entropy();
     println!("Private spend key: {:?}", hex::encode(spend));
@@ -62,7 +60,7 @@ fn main() {
     // TODO refactor into test with assertions
 
     // example random seed generation:
-    println!("Running generation example...");
+    println!("\nRunning generation example...");
     let seed = &Seed::new(&mut OsRng, Language::English);
     println!("Seed (mnemonic): {:?}", Seed::to_string(seed));
     let spend: [u8; 32] = *seed.entropy();
