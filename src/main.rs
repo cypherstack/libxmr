@@ -84,4 +84,10 @@ fn digest_mnemonic(mnemonic: &str, network: &Network) {
         view_point,
     );
     println!("Public address: {:?}", address.to_string());
+    let subaddress = MoneroAddress::new(
+        AddressMeta::new(*network, AddressType::Subaddress),
+        spend_point,
+        view_point,
+    );
+    println!("Subaddress: {:?}", subaddress.to_string());
 }
