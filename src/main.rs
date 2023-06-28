@@ -77,4 +77,31 @@ fn main() {
               view_point,
             );
     println!("Public address: {:?}", address.to_string());
+
+    // stagenet example
+    println!("\nRunning stagenet example...");
+    // https://monero.stackexchange.com/a/8767
+    // Address: 55LTR8KniP4LQGJSPtbYDacR7dz8RBFnsfAKMaMuwUNYX6aQbBcovzDPyrQF9KXF9tVU6Xk3K8no1BywnJX6GvZX8yJsXvt
+    // Seeds: vocal either anvil films dolphin zeal bacon cuisine quote syndrome rejoices envy okay pancakes tulips lair greater petals organs enmity dedicated oust thwart tomorrow tomorrow
+    // Secret view key: 0a1a38f6d246e894600a3e27238a064bf5e8d91801df47a17107596b1378e501
+    // Public view key: eedc5c8d9e3b0a8963c04fa980e4cbaa31ac5c427e21f841a7e93f279aa2fa46
+    // Secret spend key: 722bbfcf99a9b2c9e700ce857850dd8c4c94c73dca8d914c603f5fee0e365803
+    // Public spend key: 5c8044a93a0d4b73fdd9698b1c8935d3bcae206e26590ce425c2085e2fb81db3
+    let mnemonic: &str = "vocal either anvil films dolphin zeal bacon cuisine quote syndrome rejoices envy okay pancakes tulips lair greater petals organs enmity dedicated oust thwart tomorrow tomorrow";
+    let seed = Seed::from_string(Zeroizing::new(mnemonic.to_string())).unwrap();
+    println!("\nSeed (mnemonic): {:?}", Seed::to_string(&seed));
+    let spend: [u8; 32] = *seed.entropy();
+    println!("Private spend key: {:?}", hex::encode(spend));
+    let spend_scalar = Scalar::from_bytes_mod_order(spend);
+    let spend_point: EdwardsPoint = &spend_scalar * &ED25519_BASEPOINT_TABLE;
+    let view: [u8; 32] = Keccak256::digest(&spend).into();
+    let view_scalar = Scalar::from_bytes_mod_order(view);
+    println!("Private view key: {:?}", hex::encode(view_scalar.to_bytes()));
+    let view_point: EdwardsPoint = &view_scalar * &ED25519_BASEPOINT_TABLE;
+    let address = MoneroAddress::new(
+        AddressMeta::new(Network::Stagenet, AddressType::Standard),
+        spend_point,
+        view_point,
+    );
+    println!("Public address: {:?}", address.to_string());
 }
