@@ -37,46 +37,16 @@ fn main() {
     // public spend: 72170da1793490ea9d0243df46c515444c35104b92b1d75a7d8c5954ba1f49cd
     // public view: 21243cb8d0046baf10619d1fe7f38708095b006ef8e8350963c160478c1c0ff0
     // address: 45wsWad9EwZgF3VpxQumrUCRaEtdyyh6NG8sVD3YRVVJbK1jkpJ3zq8WHLijVzodQ22LxwkdWx7fS2a6JzaRGzkNU8K2Dhi
-    let mnemonic: &str = "hemlock jubilee eden hacksaw boil superior inroads epoxy exhale orders cavernous second brunt saved richly lower upgrade hitched launching deepest mostly playful layout lower eden";
-    let seed = Seed::from_string(Zeroizing::new(mnemonic.to_string())).unwrap();
-    println!("Seed (mnemonic): {:?}", Seed::to_string(&seed));
-    // TODO generate public spend and view keys
-    // generate address from test vector seed above
-    let spend: [u8; 32] = *seed.entropy();
-    println!("Private spend key: {:?}", hex::encode(spend));
-    let spend_scalar = Scalar::from_bytes_mod_order(spend);
-    let spend_point: EdwardsPoint = &spend_scalar * &ED25519_BASEPOINT_TABLE;
-    let view: [u8; 32] = Keccak256::digest(&spend).into();
-    let view_scalar = Scalar::from_bytes_mod_order(view);
-    println!("Private view key: {:?}", hex::encode(view_scalar.to_bytes()));
-    let view_point: EdwardsPoint = &view_scalar * &ED25519_BASEPOINT_TABLE;
-    let address = MoneroAddress::new(
-              AddressMeta::new(Network::Mainnet, AddressType::Standard),
-              spend_point,
-              view_point,
-            );
-    println!("Public address: {:?}", address.to_string());
+    digest_mnemonic("hemlock jubilee eden hacksaw boil superior inroads epoxy exhale orders cavernous second brunt saved richly lower upgrade hitched launching deepest mostly playful layout lower eden", &Network::Mainnet);
 
     // TODO refactor into test with assertions
 
     // example random seed generation:
     println!("\nRunning generation example...");
+    // roundabout way to get a random mnemonic
     let seed = &Seed::new(&mut OsRng, Language::English);
-    println!("Seed (mnemonic): {:?}", Seed::to_string(seed));
-    let spend: [u8; 32] = *seed.entropy();
-    println!("Private spend key: {:?}", hex::encode(spend));
-    let spend_scalar = Scalar::from_bytes_mod_order(spend);
-    let spend_point: EdwardsPoint = &spend_scalar * &ED25519_BASEPOINT_TABLE;
-    let view: [u8; 32] = Keccak256::digest(&spend).into();
-    let view_scalar = Scalar::from_bytes_mod_order(view);
-    println!("Private view key: {:?}", hex::encode(view_scalar.to_bytes()));
-    let view_point: EdwardsPoint = &view_scalar * &ED25519_BASEPOINT_TABLE;
-    let address = MoneroAddress::new(
-              AddressMeta::new(Network::Mainnet, AddressType::Standard),
-              spend_point,
-              view_point,
-            );
-    println!("Public address: {:?}", address.to_string());
+    let mnemonic = &Seed::to_string(seed);
+    digest_mnemonic(mnemonic.as_str(), &Network::Mainnet);
 
     // stagenet example
     println!("\nRunning stagenet example...");
@@ -87,9 +57,12 @@ fn main() {
     // Public view key: eedc5c8d9e3b0a8963c04fa980e4cbaa31ac5c427e21f841a7e93f279aa2fa46
     // Secret spend key: 722bbfcf99a9b2c9e700ce857850dd8c4c94c73dca8d914c603f5fee0e365803
     // Public spend key: 5c8044a93a0d4b73fdd9698b1c8935d3bcae206e26590ce425c2085e2fb81db3
-    let mnemonic: &str = "vocal either anvil films dolphin zeal bacon cuisine quote syndrome rejoices envy okay pancakes tulips lair greater petals organs enmity dedicated oust thwart tomorrow tomorrow";
+    digest_mnemonic("vocal either anvil films dolphin zeal bacon cuisine quote syndrome rejoices envy okay pancakes tulips lair greater petals organs enmity dedicated oust thwart tomorrow tomorrow", &Network::Stagenet);
+}
+
+fn digest_mnemonic(mnemonic: &str, network: &Network) {
     let seed = Seed::from_string(Zeroizing::new(mnemonic.to_string())).unwrap();
-    println!("Seed (mnemonic): {:?}", Seed::to_string(&seed));
+    println!("Seed (mnemonic): {:?}", Seed::to_string(&seed).as_str());
     let spend: [u8; 32] = *seed.entropy();
     println!("Private spend key: {:?}", hex::encode(spend));
     let spend_scalar = Scalar::from_bytes_mod_order(spend);
@@ -99,7 +72,7 @@ fn main() {
     println!("Private view key: {:?}", hex::encode(view_scalar.to_bytes()));
     let view_point: EdwardsPoint = &view_scalar * &ED25519_BASEPOINT_TABLE;
     let address = MoneroAddress::new(
-        AddressMeta::new(Network::Stagenet, AddressType::Standard),
+        AddressMeta::new(*network, AddressType::Standard),
         spend_point,
         view_point,
     );
