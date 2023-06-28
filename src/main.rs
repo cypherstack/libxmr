@@ -59,6 +59,12 @@ fn main() {
     // Public spend key: 5c8044a93a0d4b73fdd9698b1c8935d3bcae206e26590ce425c2085e2fb81db3
     digest_mnemonic("vocal either anvil films dolphin zeal bacon cuisine quote syndrome rejoices envy okay pancakes tulips lair greater petals organs enmity dedicated oust thwart tomorrow tomorrow", &Network::Stagenet);
     // block 76415 c9102b88b764591c613403f3c1ecf5d14a2929ce49b9e22257a925a25b84d0ef has coinbase tx c6c25a04dc01391875a9f845f03652798caea0772fb033615a1b2963731bfbef, 31.354865430195
+
+    println!("\nRunning alternate stagenet example...");
+    // alternate vector: honked bagpipe alpine juicy faked afoot jostle claim cowl tunnel orphans negative pheasants feast jetting quote frown teeming cycling tribal womanly hills cottage daytime daytime
+    // address: 58aWiYGUeqZc5idYcx31rYR58K1EVsCYkN6thrZppU1MGqMowPh1BYy4frVWH5RjGLPWthZy9sRGm5ZC4fgX44HUCmqtGUf
+    // subaddress: 75fvgGHHE1aAqex6Pq51hu9vG4GJd9zbsRKHxZymPa9xNPwNkK5g16idhG1Qn8C9eGdAGPXZ4E8Cz1gsotu3AynFVFBGca6
+    digest_mnemonic("honked bagpipe alpine juicy faked afoot jostle claim cowl tunnel orphans negative pheasants feast jetting quote frown teeming cycling tribal womanly hills cottage daytime daytime", &Network::Stagenet);
 }
 
 fn digest_mnemonic(mnemonic: &str, network: &Network) {
