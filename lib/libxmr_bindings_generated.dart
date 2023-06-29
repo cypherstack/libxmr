@@ -29,18 +29,22 @@ class LibxmrBindings {
 
   ffi.Pointer<ffi.Char> generate_address(
     ffi.Pointer<ffi.Char> mnemonic,
+    int account,
+    int index,
   ) {
     return _generate_address(
       mnemonic,
+      account,
+      index,
     );
   }
 
   late final _generate_addressPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Pointer<ffi.Char> Function(
-              ffi.Pointer<ffi.Char>)>>('generate_address');
-  late final _generate_address = _generate_addressPtr
-      .asFunction<ffi.Pointer<ffi.Char> Function(ffi.Pointer<ffi.Char>)>();
+          ffi.Pointer<ffi.Char> Function(ffi.Pointer<ffi.Char>, ffi.Uint32,
+              ffi.Uint32)>>('generate_address');
+  late final _generate_address = _generate_addressPtr.asFunction<
+      ffi.Pointer<ffi.Char> Function(ffi.Pointer<ffi.Char>, int, int)>();
 
   ffi.Pointer<ffi.Char> generate_seed() {
     return _generate_seed();

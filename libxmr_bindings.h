@@ -5,6 +5,6 @@
 #include <stdlib.h>
 
 
-const char *generate_address(const char *mnemonic);
+const char *generate_address(const char *mnemonic, uint32_t account, uint32_t index);
 
 const char *generate_seed(void);

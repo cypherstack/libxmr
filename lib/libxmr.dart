@@ -25,7 +25,7 @@ final DynamicLibrary _dylib = () {
 /// The bindings to the native functions in [_dylib].
 final LibxmrBindings _bindings = LibxmrBindings(_dylib);
 
-String generate_seed() {
+String generateMnemonic() {
   final Pointer<Char> seedPtr = _bindings.generate_seed();
   final utf8Pointer = seedPtr.cast<Utf8>();
   final seed = utf8Pointer.toDartString();
@@ -35,9 +35,9 @@ String generate_seed() {
   return seed;
 }
 
-String generate_address(String mnemonic) {
+String generateAddress({String mnemonic = "", int account = 0, int index = 0}) {
   Pointer<Char> mnemonicPtr = mnemonic.toNativeUtf8().cast<Char>();
-  final Pointer<Char> addressPtr = _bindings.generate_address(mnemonicPtr);
+  final Pointer<Char> addressPtr = _bindings.generate_address(mnemonicPtr, account, index);
 
   final utf8Pointer = addressPtr.cast<Utf8>();
   final seed = utf8Pointer.toDartString();
