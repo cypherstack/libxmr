@@ -48,13 +48,17 @@ class LibxmrBindings {
   late final _generate_address = _generate_addressPtr.asFunction<
       ffi.Pointer<ffi.Char> Function(ffi.Pointer<ffi.Char>, int, int, int)>();
 
-  ffi.Pointer<ffi.Char> generate_seed() {
-    return _generate_seed();
+  ffi.Pointer<ffi.Char> generate_seed(
+    int language,
+  ) {
+    return _generate_seed(
+      language,
+    );
   }
 
   late final _generate_seedPtr =
-      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function()>>(
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function(ffi.Uint8)>>(
           'generate_seed');
   late final _generate_seed =
-      _generate_seedPtr.asFunction<ffi.Pointer<ffi.Char> Function()>();
+      _generate_seedPtr.asFunction<ffi.Pointer<ffi.Char> Function(int)>();
 }
