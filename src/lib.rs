@@ -22,7 +22,7 @@ use curve25519_dalek::{
 
 use sha3::{Digest, Keccak256}; // for generating the view key
 
-#[no_mangle] pub extern "C" fn generate_seed(language: u8) -> *const c_char { // TODO rename fn to be more in line with other libs/impls
+#[no_mangle] pub extern "C" fn generate_mnemonic(language: u8) -> *const c_char { // TODO rename fn to be more in line with other libs/impls
     let _language: Language = match language{
         0=>Language::German,
         1=>Language::English,
