@@ -27,8 +27,16 @@ use sha3::{Digest, Keccak256}; // for generating the view key
      // TODO add lang as param
 }
 
-#[no_mangle] pub extern "C" fn generate_address(mnemonic: *const c_char, account: u32, index: u32) -> *const c_char {
-    let seed = Seed::from_string(Zeroizing::new(convert_c_char_ptr_to_string(mnemonic))).unwrap(); // TODO catch empty mnemonic, validate it
+#[no_mangle] pub extern "C" fn generate_address(mnemonic: *const c_char, network: u8, account: u32, index: u32) -> *const c_char {
+    let seed = Seed::from_string(Zeroizing::new(convert_c_char_ptr_to_string(mnemonic))).unwrap(); // TODO validate mnemonic (catch empty etc)
+
+    let _network: Network = match network{
+        0=>Network::Mainnet,
+        1=>Network::Testnet,
+        2=>Network::Stagenet,
+        _=>Network::Mainnet,
+        // etc
+    };
 
     let spend: [u8; 32] = *seed.entropy();
     let spend_scalar = Scalar::from_bytes_mod_order(spend);
@@ -41,13 +49,13 @@ use sha3::{Digest, Keccak256}; // for generating the view key
     let address: MoneroAddress;
     if (account == 0) && (index == 0) {
         address = MoneroAddress::new(
-            AddressMeta::new(Network::Mainnet, AddressType::Standard),
+            AddressMeta::new(_network, AddressType::Standard),
             spend_point,
             view_point,
         );
     } else {
         let view = ViewPair::new(spend_point, Zeroizing::new(view_scalar));
-        address = view.address(Network::Mainnet, AddressSpec::Subaddress(SubaddressIndex::new(account, index).unwrap()));
+        address = view.address(_network, AddressSpec::Subaddress(SubaddressIndex::new(account, index).unwrap()));
     }
     // TODO network param for Stagenet etc
 
