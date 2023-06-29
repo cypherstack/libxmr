@@ -3,7 +3,8 @@ use monero_serai::{
         seed::{
             Seed, Language
         },
-        address::{AddressType, AddressMeta, MoneroAddress, Network},
+        address::{AddressType, AddressMeta, AddressSpec, MoneroAddress, Network, SubaddressIndex},
+        ViewPair,
     },
 };
 
@@ -26,7 +27,7 @@ use sha3::{Digest, Keccak256}; // for generating the view key
      // TODO add lang as param
 }
 
-#[no_mangle] pub extern "C" fn generate_address(mnemonic: *const c_char) -> *const c_char {
+#[no_mangle] pub extern "C" fn generate_address(mnemonic: *const c_char, account: u32, index: u32) -> *const c_char {
     let seed = Seed::from_string(Zeroizing::new(convert_c_char_ptr_to_string(mnemonic))).unwrap(); // TODO catch empty mnemonic, validate it
 
     let spend: [u8; 32] = *seed.entropy();
@@ -37,13 +38,18 @@ use sha3::{Digest, Keccak256}; // for generating the view key
     let view_scalar = Scalar::from_bytes_mod_order(view);
     let view_point: EdwardsPoint = &view_scalar * &ED25519_BASEPOINT_TABLE;
 
-    // TODO allow generation of subaddresses via index param (default=0)
-
-    let address = MoneroAddress::new(
-        AddressMeta::new(Network::Mainnet, AddressType::Standard),
-        spend_point,
-        view_point,
-    );
+    let address: MoneroAddress;
+    if (account == 0) && (index == 0) {
+        address = MoneroAddress::new(
+            AddressMeta::new(Network::Mainnet, AddressType::Standard),
+            spend_point,
+            view_point,
+        );
+    } else {
+        let view = ViewPair::new(spend_point, Zeroizing::new(view_scalar));
+        address = view.address(Network::Mainnet, AddressSpec::Subaddress(SubaddressIndex::new(account, index).unwrap()));
+    }
+    // TODO network param for Stagenet etc
 
     let c_string = CString::new(address.to_string()).unwrap();
     let pointer: *const c_char = c_string.as_ptr() as *const c_char;
