@@ -65,6 +65,7 @@ fn main() {
     // address: 58aWiYGUeqZc5idYcx31rYR58K1EVsCYkN6thrZppU1MGqMowPh1BYy4frVWH5RjGLPWthZy9sRGm5ZC4fgX44HUCmqtGUf
     // subaddress: 75fvgGHHE1aAqex6Pq51hu9vG4GJd9zbsRKHxZymPa9xNPwNkK5g16idhG1Qn8C9eGdAGPXZ4E8Cz1gsotu3AynFVFBGca6
     digest_mnemonic("honked bagpipe alpine juicy faked afoot jostle claim cowl tunnel orphans negative pheasants feast jetting quote frown teeming cycling tribal womanly hills cottage daytime daytime", &Network::Stagenet);
+    // block 1384526 a5918cf3adadfabee8675011d574aa5cea619d7cedd62a58bd81d391dc4234db has tx 07a561e60118c0a485b20bbfac787fd8efead96a9f422d9dff4a86f2985db7c5, 10.000000000000 XMR
 }
 
 fn digest_mnemonic(mnemonic: &str, network: &Network) {
