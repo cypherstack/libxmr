@@ -8,7 +8,8 @@ use monero_serai::{
         // address::{AddressError, Network, AddressType, AddressSpec, AddressMeta, MoneroAddress},
         // SpendableOutput,
         seed::{Seed, Language},
-        address::{AddressType, AddressMeta, MoneroAddress, Network},
+        address::{AddressType, AddressMeta, AddressSpec, MoneroAddress, Network, SubaddressIndex},
+        ViewPair,
     },
 };
 // use monero_serai::*;
@@ -37,6 +38,7 @@ fn main() {
     // public spend: 72170da1793490ea9d0243df46c515444c35104b92b1d75a7d8c5954ba1f49cd
     // public view: 21243cb8d0046baf10619d1fe7f38708095b006ef8e8350963c160478c1c0ff0
     // address: 45wsWad9EwZgF3VpxQumrUCRaEtdyyh6NG8sVD3YRVVJbK1jkpJ3zq8WHLijVzodQ22LxwkdWx7fS2a6JzaRGzkNU8K2Dhi
+    // subaddress: 86QMPxju4EHGHZfyswVHXsQcKK3vJgqUFgbP8Xx8DNTSjaGqcp8KXc9isQS3Hh8twz8huegagK19rJLDbBwCwAxRHX4vcv5
     digest_mnemonic("hemlock jubilee eden hacksaw boil superior inroads epoxy exhale orders cavernous second brunt saved richly lower upgrade hitched launching deepest mostly playful layout lower eden", &Network::Mainnet);
 
     // TODO refactor into test with assertions
@@ -85,10 +87,15 @@ fn digest_mnemonic(mnemonic: &str, network: &Network) {
         view_point,
     );
     println!("Public address: {:?}", address.to_string());
-    let subaddress = MoneroAddress::new(
-        AddressMeta::new(*network, AddressType::Subaddress),
-        spend_point,
-        view_point,
-    );
-    println!("Subaddress: {:?}", subaddress.to_string());
+    // TODO: find out why this doesn't work
+    // let subaddress = MoneroAddress::new(
+    //     AddressMeta::new(*network, AddressType::Subaddress),
+    //     spend_point,
+    //     view_point,
+    // );
+    // println!("Subaddress: {:?}", subaddress.to_string());
+    let view = ViewPair::new(spend_point, Zeroizing::new(view_scalar));
+    let view_subaddress = view.address(*network, AddressSpec::Subaddress(SubaddressIndex::new(0, 1).unwrap()));
+    // AddressSpec::Subaddress(SubaddressIndex::new(0, 1).unwrap())
+    println!("Subaddress(0, 1): {:?}", view_subaddress.to_string());
 }
