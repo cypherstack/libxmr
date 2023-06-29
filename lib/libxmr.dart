@@ -25,8 +25,8 @@ final DynamicLibrary _dylib = () {
 /// The bindings to the native functions in [_dylib].
 final LibxmrBindings _bindings = LibxmrBindings(_dylib);
 
-String generateMnemonic() {
-  final Pointer<Char> seedPtr = _bindings.generate_seed();
+String generateMnemonic({int language = 1}) {
+  final Pointer<Char> seedPtr = _bindings.generate_seed(language);
   final utf8Pointer = seedPtr.cast<Utf8>();
   final seed = utf8Pointer.toDartString();
 
