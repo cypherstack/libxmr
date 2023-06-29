@@ -35,9 +35,9 @@ String generateMnemonic() {
   return seed;
 }
 
-String generateAddress({String mnemonic = "", int account = 0, int index = 0}) {
+String generateAddress({String mnemonic = "", int network = 0, int account = 0, int index = 0}) {
   Pointer<Char> mnemonicPtr = mnemonic.toNativeUtf8().cast<Char>();
-  final Pointer<Char> addressPtr = _bindings.generate_address(mnemonicPtr, account, index);
+  final Pointer<Char> addressPtr = _bindings.generate_address(mnemonicPtr, network, account, index);
 
   final utf8Pointer = addressPtr.cast<Utf8>();
   final seed = utf8Pointer.toDartString();
