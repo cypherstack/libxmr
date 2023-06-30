@@ -136,9 +136,14 @@ async fn test_output_detection() {
     // let rpc = rpc().await;
     // let start = rpc.get_height().await.unwrap();
     // let rpc = HttpRpc::new("http://127.0.0.1:38081".to_string()).unwrap(); // for local stagenet daemon testing
-    let rpc = HttpRpc::new("https://monero.stackwallet.com:18081".to_string()).unwrap(); // for remote mainnet testing
+    let rpc = HttpRpc::new("http://stagenet.community.rino.io:38081".to_string()).unwrap(); // for remote stagenet daemon testing
+    // let rpc = HttpRpc::new("https://monero.stackwallet.com:18081".to_string()).unwrap(); // for remote mainnet testing
     let height = rpc.get_height().await.unwrap();
-    println!("Block height {:?}", height.to_string());
+    println!("Block height: {:?}", height.to_string());
+    let block = rpc.get_block_by_number(1384526).await.unwrap();
+    // scanner.scan(rpc, &block).await.unwrap().swap_remove(0).ignore_timelock().swap_remove(0)
+    let scan = scanner.scan(&rpc, &block).await.unwrap().swap_remove(0).ignore_timelock().swap_remove(0);
+    println!("Scan result: {:?}", scan);
 }
 
 // pub async fn rpc() -> Rpc<HttpRpc> {
