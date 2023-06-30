@@ -40,9 +40,9 @@ String generateAddress({String mnemonic = "", int network = 0, int account = 0, 
   final Pointer<Char> addressPtr = _bindings.generate_address(mnemonicPtr, network, account, index);
 
   final utf8Pointer = addressPtr.cast<Utf8>();
-  final seed = utf8Pointer.toDartString();
+  final address = utf8Pointer.toDartString();
 
   calloc.free(utf8Pointer);
 
-  return seed;
+  return address;
 }
