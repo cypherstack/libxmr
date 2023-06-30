@@ -2,7 +2,7 @@
 
 use monero_serai::{
     // random_scalar,
-    // rpc::{HttpRpc, Rpc},
+    rpc::{HttpRpc, Rpc},
     wallet::{
         // ViewPair, Scanner,
         // address::{AddressError, Network, AddressType, AddressSpec, AddressMeta, MoneroAddress},
@@ -29,13 +29,16 @@ use zeroize::Zeroizing;
 
 use std::collections::HashSet;
 
-fn main() {
+use tokio; // for async main
+
+#[tokio::main]
+async fn main() {
     // address generation test vectors
     test_address_generation();
     // TODO refactor into proper `cargo test`able tests with assertions ... pull vectors out into some struct (or json)
 
     // output detection example WIP
-    test_output_detection();
+    test_output_detection().await;
 }
 
 fn test_address_generation() {
@@ -111,7 +114,7 @@ fn digest_mnemonic(mnemonic: &str, network: &Network) {
     println!("Subaddress(0, 1): {:?}", view_subaddress.to_string());
 }
 
-fn test_output_detection() {
+async fn test_output_detection() {
     println!("\nRunning output detection example...");
     // let network: Network = Network::Stagenet;
     let seed = Seed::from_string(Zeroizing::new("honked bagpipe alpine juicy faked afoot jostle claim cowl tunnel orphans negative pheasants feast jetting quote frown teeming cycling tribal womanly hills cottage daytime daytime".to_string())).unwrap();
@@ -127,13 +130,34 @@ fn test_output_detection() {
     //     view_point,
     // );
     let view = ViewPair::new(spend_point, Zeroizing::new(view_scalar));
+
     let mut scanner = Scanner::from_view(view.clone(), Some(HashSet::new()));
     scanner.register_subaddress(SubaddressIndex::new(0, 1).unwrap());
+    // let rpc = rpc().await;
+    // let start = rpc.get_height().await.unwrap();
+    // let rpc = HttpRpc::new("http://127.0.0.1:38081".to_string()).unwrap(); // for local stagenet daemon testing
+    let rpc = HttpRpc::new("https://monero.stackwallet.com:18081".to_string()).unwrap(); // for remote mainnet testing
+    let height = rpc.get_height().await.unwrap();
+    println!("Block height {:?}", height.to_string());
 }
+
+// pub async fn rpc() -> Rpc<HttpRpc> {
+//     let rpc = HttpRpc::new("http://127.0.0.1:38081".to_string()).unwrap();
+//
+//     // Only run once
+//     if rpc.get_height().await.unwrap() != 1 {
+//         return rpc;
+//     }
+//
+//     // Make sure we recognize the protocol
+//     rpc.get_protocol().await.unwrap();
+//
+//     rpc
+// }
 
 #[cfg(test)]
 mod tests {
-    use super::*;
+    // use super::*;
 
     #[test]
     fn it_works() {
