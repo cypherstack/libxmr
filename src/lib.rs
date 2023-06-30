@@ -22,7 +22,7 @@ use curve25519_dalek::{
 
 use sha3::{Digest, Keccak256}; // for generating the view key
 
-#[no_mangle] pub extern "C" fn generate_mnemonic(language: u8) -> *const c_char { // TODO rename fn to be more in line with other libs/impls
+#[no_mangle] pub extern "C" fn generate_mnemonic(language: u8) -> *const c_char {
     let _language: Language = match language{
         0=>Language::German,
         1=>Language::English,
@@ -41,7 +41,6 @@ use sha3::{Digest, Keccak256}; // for generating the view key
     };
 
     convert_zeroize_string_to_c_string(&Seed::to_string(&Seed::new(&mut OsRng, _language)))
-     // TODO add lang as param
 }
 
 #[no_mangle] pub extern "C" fn generate_address(mnemonic: *const c_char, network: u8, account: u32, index: u32) -> *const c_char {
@@ -74,7 +73,6 @@ use sha3::{Digest, Keccak256}; // for generating the view key
         let view = ViewPair::new(spend_point, Zeroizing::new(view_scalar));
         address = view.address(_network, AddressSpec::Subaddress(SubaddressIndex::new(account, index).unwrap()));
     }
-    // TODO network param for Stagenet etc
 
     let c_string = CString::new(address.to_string()).unwrap();
     let pointer: *const c_char = c_string.as_ptr() as *const c_char;
