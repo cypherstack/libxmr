@@ -53,7 +53,7 @@ cd scripts/android
  - Use `flutter run` in the `example` folder for a demonstration of this plugin.
  - To generate `libxmr_bindings.h` C bindings for Rust: `cbindgen --config cbindgen.toml --crate libxmr --output libxmr_bindings.h` <!--C bindings are generated on `cargo build`s via `build.rs`. TODO re-enable this after build.rs is fixed to produce the same output as the cbindgen command above-->
  - To generate `libxmr_bindings_generated.dart` Dart bindings for C: `dart run ffigen --config ffigen.yaml`
- - If bindings are generated for a new (not previously supported/included in `lib/libxmr.dart`) function, a wrapper function for it must be written by hand (see: `generate_seed`, `generate_address`)
+ - If bindings are generated for a new (not previously supported/included in `lib/libxmr.dart`) function, a wrapper function for it must be written by hand (see: `generateMnemonic`, `generateAddress`)
 
 ## Getting Started
 
