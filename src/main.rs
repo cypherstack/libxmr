@@ -9,6 +9,7 @@ use monero_serai::{
         // SpendableOutput,
         seed::{Seed, Language},
         address::{AddressType, AddressMeta, AddressSpec, MoneroAddress, Network, SubaddressIndex},
+        Scanner,
         ViewPair,
     },
 };
@@ -26,8 +27,18 @@ use sha3::{Digest, Keccak256}; // for generating the view key
 
 use zeroize::Zeroizing;
 
+use std::collections::HashSet;
+
 fn main() {
     // address generation test vectors
+    test_address_generation();
+    // TODO refactor into proper `cargo test`able tests with assertions ... pull vectors out into some struct (or json)
+
+    // output detection example WIP
+    test_output_detection();
+}
+
+fn test_address_generation() {
     println!("\nRunning checks on test vector...");
     // test vector from https://xmrtests.llcoins.net/addresstests.html
     // seed (mnemonic): hemlock jubilee eden hacksaw boil superior inroads epoxy exhale orders cavernous second brunt saved richly lower upgrade hitched launching deepest mostly playful layout lower eden
@@ -40,8 +51,6 @@ fn main() {
     // address: 45wsWad9EwZgF3VpxQumrUCRaEtdyyh6NG8sVD3YRVVJbK1jkpJ3zq8WHLijVzodQ22LxwkdWx7fS2a6JzaRGzkNU8K2Dhi
     // subaddress: 86QMPxju4EHGHZfyswVHXsQcKK3vJgqUFgbP8Xx8DNTSjaGqcp8KXc9isQS3Hh8twz8huegagK19rJLDbBwCwAxRHX4vcv5
     digest_mnemonic("hemlock jubilee eden hacksaw boil superior inroads epoxy exhale orders cavernous second brunt saved richly lower upgrade hitched launching deepest mostly playful layout lower eden", &Network::Mainnet);
-
-    // TODO refactor into test with assertions
 
     // example random seed generation:
     println!("\nRunning generation example...");
@@ -95,7 +104,40 @@ fn digest_mnemonic(mnemonic: &str, network: &Network) {
     // );
     // println!("Subaddress: {:?}", subaddress.to_string());
     let view = ViewPair::new(spend_point, Zeroizing::new(view_scalar));
+    // let view_address = view.address(network, AddressSpec::Standard);
+    // assert view_address = _address
     let view_subaddress = view.address(*network, AddressSpec::Subaddress(SubaddressIndex::new(0, 1).unwrap()));
     // AddressSpec::Subaddress(SubaddressIndex::new(0, 1).unwrap())
     println!("Subaddress(0, 1): {:?}", view_subaddress.to_string());
 }
+
+fn test_output_detection() {
+    println!("\nRunning output detection example...");
+    // let network: Network = Network::Stagenet;
+    let seed = Seed::from_string(Zeroizing::new("honked bagpipe alpine juicy faked afoot jostle claim cowl tunnel orphans negative pheasants feast jetting quote frown teeming cycling tribal womanly hills cottage daytime daytime".to_string())).unwrap();
+    let spend: [u8; 32] = *seed.entropy();
+    let spend_scalar = Scalar::from_bytes_mod_order(spend);
+    let spend_point: EdwardsPoint = &spend_scalar * &ED25519_BASEPOINT_TABLE;
+    let view: [u8; 32] = Keccak256::digest(&spend).into();
+    let view_scalar = Scalar::from_bytes_mod_order(view);
+    // let view_point: EdwardsPoint = &view_scalar * &ED25519_BASEPOINT_TABLE;
+    // let address = MoneroAddress::new(
+    //     AddressMeta::new(network, AddressType::Standard),
+    //     spend_point,
+    //     view_point,
+    // );
+    let view = ViewPair::new(spend_point, Zeroizing::new(view_scalar));
+    let mut scanner = Scanner::from_view(view.clone(), Some(HashSet::new()));
+    scanner.register_subaddress(SubaddressIndex::new(0, 1).unwrap());
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn it_works() {
+        // TODO
+    }
+}
+
