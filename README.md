@@ -1,6 +1,59 @@
 # libxmr
 
-A new Flutter project.
+[libxmr](https://git.cypherstack.com/julian/libxmr) as a multi-platform Flutter FFI plugin for Monero using [monero-serai, serai-dex/serai's Monero library](https://github.com/serai-dex/serai).
+
+## Getting started
+
+### Install Rust 
+
+https://www.rust-lang.org/tools/install
+
+### Install cargo ndk
+```sh
+cargo install cargo-ndk
+```
+
+### Install Flutter
+
+https://docs.flutter.dev/get-started/install
+
+### Install dependencies
+```sh
+sudo apt install git build-essential cmake llvm clang pkg-config cargo rustc libssl-dev libc6-dev-i386 libclang-dev
+```
+
+Windows and MacOS, see additional [ffigen](https://pub.dev/packages/ffigen#installing-llvm) requirements
+
+### Init `serai` submodule
+```sh
+git submodule update --init --recursive
+```
+
+### Run build scripts
+
+#### Linux
+
+Run build script
+```sh
+cd scripts/linux
+./build_all.sh
+```
+<!--
+#### Android
+
+Run the NDK setup and build scripts
+```sh
+cd scripts/android
+./install_ndk.sh
+./build_all.sh
+```
+-->
+## Development
+
+ - Use `flutter run` in the `example` folder for a demonstration of this plugin.
+ - To generate `libxmr_bindings.h` C bindings for Rust: `cbindgen --config cbindgen.toml --crate libxmr --output libxmr_bindings.h` <!--C bindings are generated on `cargo build`s via `build.rs`. TODO re-enable this after build.rs is fixed to produce the same output as the cbindgen command above-->
+ - To generate `libxmr_bindings_generated.dart` Dart bindings for C: `dart run ffigen --config ffigen.yaml`
+ - If bindings are generated for a new (not previously supported/included in `lib/libxmr.dart`) function, a wrapper function for it must be written by hand (see: `generateMnemonic`, `generateAddress`)
 
 ## Getting Started
 

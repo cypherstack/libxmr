@@ -42,3 +42,10 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Example app artefacts
+**/generated
+**/intermediates
+**/outputs
+**/tmp
+**/.transforms
